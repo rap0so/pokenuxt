@@ -1,75 +1,83 @@
-# Nuxt Minimal Starter
+# PokéNuxt – Take‑Home Challenge
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Welcome! Your mission is to build **PokéNuxt**—a Nuxt 3 web app styled with UnoCSS (Tailwind‑like) that fetches data from the public [PokeAPI](https://pokeapi.co).  
+The project is intentionally scoped so you can complete it in about four days. Feel free to install **any dependency** that helps you.
 
-## Setup
+We recommend you to use **Typescript** for the whole project, but it’s not mandatory.
 
-Make sure to install dependencies:
+---
 
-```bash
-# npm
-npm install
+## 🚀 Quick Start
 
-# pnpm
-pnpm install
+1. Clone the repository you received (it already contains Nuxt, UnoCSS and testing boilerplate).
+2. Install deps:
 
-# yarn
-yarn install
+        yarn install
 
-# bun
-bun install
-```
+3. Launch dev server:
 
-## Development Server
+        yarn dev
 
-Start the development server on `http://localhost:3000`:
+4. Build & preview:
 
-```bash
-# npm
-npm run dev
+        yarn build
+        yarn preview
 
-# pnpm
-pnpm dev
+---
 
-# yarn
-yarn dev
+## 🗺️ What to Build
 
-# bun
-bun run dev
-```
+| # | Feature                                                                                                    | Why we ask for it                 |
+|---|------------------------------------------------------------------------------------------------------------|-----------------------------------|
+| 1 | **Pokémon list** (paginated) fetched with `useFetch()`.                                                    | Shows data handling               |
+| 2 | **Search / filter** by name **and** type.                                                                  | Tests composables & derived state |
+| 3 | **Detail page** at `/pokemon/[name]` displaying artwork, base stats and types.                             | Checks dynamic routing            |
+| 4 | **SSR buildable** with `yarn build`.                                                                       | Verifies server-side rendering    |
+| 5 | **Responsive UI** using UnoCSS utilities.                                                                  | Evaluates styling approach        |
+| 6 | **Accessibility basics**: semantic landmarks, focus states.                                                | Good product hygiene              |
+| 7 | **Unit tests** for at least one composable *and* one component of your choice. Run tests with `yarn test`. | Shows quality mindset             |
 
-## Production
+---
 
-Build the application for production:
+## ✨ Bonus Ideas (completely optional)
 
-```bash
-# npm
-npm run build
+* Infinite scroll
+* Dark/light mode toggle
+* E2E tests (Playwright / Cypress)
+* CI pipeline (lint + test + deploy on push)
+* Internationalization (English + one more language)
+* Stats radar chart
 
-# pnpm
-pnpm build
+---
 
-# yarn
-yarn build
+## 🆘 Nuxt / Vue Crash‑Course
 
-# bun
-bun run build
-```
+* **Pages directory** ➜ file‑based routing (`/pages/pokemon/[name].vue`).
+* **`script setup`** ➜ Composition API + `<template>` in one file.
+* **`useFetch(url)`** ➜ SSR‑friendly wrapper around `$fetch`.
+* **Pinia** ➜ lightweight global store (`defineStore`).
+* **UnoCSS** ➜ Tailwind‑style utilities—class names like `bg-red-500 p-4 rounded-md`.
+* **Testing** ➜ Vitest + Vue Test Utils are pre‑installed; run `yarn test`.
 
-Locally preview production build:
+---
 
-```bash
-# npm
-npm run preview
+## 📦 Useful Commands
 
-# pnpm
-pnpm preview
+        yarn dev             # Start dev server with HMR
 
-# yarn
-yarn preview
+        yarn test            # Run unit tests with Vitest
 
-# bun
-bun run preview
-```
+        yarn build           # Build for production
+        yarn preview         # Preview production build
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+        yarn lint            # Check code style
+        yarn lint:fix        # Fix code style
+
+---
+
+## 📨 Submission
+
+1. Push code to **your own** Git repo.
+2. Send us the link to your repo so we can review the challenge.
+
+Good luck & have fun!
