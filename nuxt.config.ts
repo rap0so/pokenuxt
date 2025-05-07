@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
     '@nuxt/test-utils',
+    '@unocss/nuxt',
   ],
   devtools: { enabled: true },
   compatibilityDate: '2024-11-01',
