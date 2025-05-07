@@ -27,15 +27,15 @@ We recommend you to use **Typescript** for the whole project, but it’s not man
 
 ## 🗺️ What to Build
 
-| # | Feature                                                                                                    | Why we ask for it                 |
-|---|------------------------------------------------------------------------------------------------------------|-----------------------------------|
-| 1 | **Pokémon list** (paginated) fetched with `useFetch()`.                                                    | Shows data handling               |
-| 2 | **Search / filter** by name **and** type.                                                                  | Tests composables & derived state |
-| 3 | **Detail page** at `/pokemon/[name]` displaying artwork, base stats and types.                             | Checks dynamic routing            |
-| 4 | **SSR buildable** with `yarn build`.                                                                       | Verifies server-side rendering    |
-| 5 | **Responsive UI** using UnoCSS utilities.                                                                  | Evaluates styling approach        |
-| 6 | **Accessibility basics**: semantic landmarks, focus states.                                                | Good product hygiene              |
-| 7 | **Unit tests** for at least one composable *and* one component of your choice. Run tests with `yarn test`. | Shows quality mindset             |
+| # | Feature                                                                                      | Why we ask for it                 |
+|---|----------------------------------------------------------------------------------------------|-----------------------------------|
+| 1 | **Pokémon list** (paginated).                                                                | Shows data handling               |
+| 2 | **Search / filter** by name **and** type.                                                    | Tests composables & derived state |
+| 3 | **Detail page** at `/pokemon/[name]` displaying artwork, base stats and types.               | Checks dynamic routing            |
+| 4 | **SSR buildable** (`yarn build`)                                                             | Verifies server-side rendering    |
+| 5 | **Responsive UI** using UnoCSS utilities.                                                    | Evaluates styling approach        |
+| 6 | **Accessibility basics**: semantic landmarks, focus states.                                  | Good product hygiene              |
+| 7 | **Unit tests** for at least one composable *and* one component of your choice. (`yarn test`) | Shows quality mindset             |
 
 ---
 
