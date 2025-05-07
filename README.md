@@ -79,7 +79,11 @@ We recommend you to use **Typescript** for the whole project, but it’s not man
 
 ## 📨 Submission
 
-1. Push code to **your own** Git repo.
-2. Send us the link to your repo so we can review the challenge.
+1. Push code to **your own** Git repo, on the platform of your choice (GitHub, GitLab, etc.)
+2. Send us the link to your repo so we can review the challenge. Make sure we can access it. 😊
 
-Good luck & have fun!
+---
+
+Good luck & have fun! 🍀
+
+![Pikachu](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png)
