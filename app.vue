@@ -7,7 +7,7 @@
 
       <img
         src="/public/logo.png"
-        alt="PokéNuxt"
+        alt="PokéNuxt's logo, showing a Pokéball"
         height="100"
         class="h-10 mb-4"
       >
