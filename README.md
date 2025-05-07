@@ -1,3 +1,5 @@
+![logo.png](public/logo.png){width=30%}
+
 # PokéNuxt – Take‑Home Challenge
 
 Welcome! Your mission is to build **PokéNuxt**—a Nuxt 3 web app styled with UnoCSS (Tailwind‑like) that fetches data from the public [PokeAPI](https://pokeapi.co).  
