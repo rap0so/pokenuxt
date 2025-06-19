@@ -3,9 +3,7 @@ import { useFetch, useRuntimeConfig } from '#app'
 import { usePokemons } from '~/composables/usePokemons'
 
 vi.mock('#app', () => ({
-  useFetch: vi.fn(() => {
-    console.log('useFetch called')
-  }),
+  useFetch: vi.fn(),
   useRuntimeConfig: vi.fn(),
 }))
 
