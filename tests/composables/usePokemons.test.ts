@@ -1,56 +1,62 @@
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
-import { useFetch, useRuntimeConfig } from '#app'
+import { ref } from 'vue'
+import { useAsyncData, useRuntimeConfig } from '#app'
 import { usePokemons } from '~/composables/usePokemons'
+import { usePokemonStore } from '~/stores/pokemon'
 
+// Mock Nuxt composables and your store
 vi.mock('#app', () => ({
-  useFetch: vi.fn(),
+  useAsyncData: vi.fn(),
   useRuntimeConfig: vi.fn(),
+}))
+
+vi.mock('~/stores/pokemon', () => ({
+  usePokemonStore: vi.fn(),
 }))
 
 const mockApiBaseUrl = 'https://asdasdasd.com'
 
 describe('usePokemons', () => {
+  const mockGetOrFetchPage = vi.fn()
+  const fakeStore = { getOrFetchPage: mockGetOrFetchPage }
+
   beforeEach(() => {
     (useRuntimeConfig as Mock).mockReturnValue({
       public: { apiBaseUrl: mockApiBaseUrl },
+    });
+
+    (usePokemonStore as unknown as Mock).mockReturnValue(fakeStore)
+    vi.clearAllMocks()
+  })
+
+  it('calls getOrFetchPage with offset and limit correctly', async () => {
+    const fakeData = { results: [{ name: 'bulbasaur' }] }
+    mockGetOrFetchPage.mockResolvedValue(fakeData);
+
+    // Mock useAsyncData to immediately invoke our loader function and resolve data
+    (useAsyncData as Mock).mockImplementation(async (_, loader) => {
+      const value = await loader()
+
+      return {
+        data: { value },
+        pending: { value: false },
+        error: { value: null },
+      }
     })
+
+    const offset = ref(20)
+    const result = await usePokemons(offset, 10)
+
+    expect(usePokemonStore).toHaveBeenCalled()
+    expect(mockGetOrFetchPage).toHaveBeenCalledWith(20, 10, mockApiBaseUrl)
+
+    expect(result.data.value).toBe(fakeData)
   })
 
-  it('calls useFetch with URL and key correctly (offset/limit custom)', () => {
-    const fakeResponse = {
-      data: { value: { results: [{ name: 'bulbasaur' }] } },
-      pending: { value: false },
-      error: { value: null },
-    };
+  it('calls getOrFetchPage with offset=0 and limit=20 by default', async () => {
+    const offset = ref(0)
+    usePokemons(offset, 20)
 
-    (useFetch as Mock).mockReturnValue(fakeResponse)
-
-    const result = usePokemons(20, 10)
-
-    expect(useFetch).toHaveBeenCalledWith(
-      mockApiBaseUrl + '/pokemon?offset=20&limit=10',
-      expect.objectContaining({ key: 'pokemons-20-10' }),
-      expect.stringMatching('$'), // internal key of useFetch (it took me a while to understand)
-    )
-    expect(result).toBe(fakeResponse)
-  })
-
-  it('calls useFetch with offset=0 and limit=20 by default', () => {
-    const fakeResponse = {
-      data: { value: { results: [{ name: 'pikachu' }] } },
-      pending: { value: false },
-      error: { value: null },
-    };
-
-    (useFetch as Mock).mockReturnValue(fakeResponse)
-
-    const result = usePokemons()
-
-    expect(useFetch).toHaveBeenCalledWith(
-      mockApiBaseUrl + '/pokemon?offset=0&limit=20',
-      expect.objectContaining({ key: 'pokemons-0-20' }),
-      expect.stringMatching('$'),
-    )
-    expect(result).toBe(fakeResponse)
+    expect(mockGetOrFetchPage).toHaveBeenCalledWith(0, 20, mockApiBaseUrl)
   })
 })
