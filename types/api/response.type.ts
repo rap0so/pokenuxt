@@ -17,12 +17,23 @@ export type UsePokemonResponse = {
   previous: string | null
 }
 
-// TODO: check if this type matches
+type UsePokemonDetailSpritesOther = {
+  front_default: string | null
+}
+
 export type UsePokemonDetailResponse = {
   id: number
   name: string
   height: number
   weight: number
+  stats: {
+    base_stat: number
+    effort: number
+    stat: {
+      name: string
+      url: string
+    }
+  }[]
   abilities: {
     ability: {
       name: string
@@ -40,6 +51,10 @@ export type UsePokemonDetailResponse = {
   }[]
   sprites: {
     front_default: string | null
-    [key: string]: string | null
+    other: {
+      'official-artwork': UsePokemonDetailSpritesOther
+      'home': UsePokemonDetailSpritesOther
+    }
+    [key: string]: string | object | null
   }
 }

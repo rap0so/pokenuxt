@@ -1,11 +1,13 @@
-import { useFetch, useRuntimeConfig } from '#app'
-import type { UsePokemonDetailResponse } from '~/types/api/response.type'
+import { useRuntimeConfig } from '#app'
 
-export const usePokemonDetail = (name: string) => {
+export const usePokemonDetail = (name: Ref<string>) => {
   const config = useRuntimeConfig()
   const apiBaseUrl = String(config?.public?.apiBaseUrl)
+  const store = usePokemonStore()
 
-  return useFetch<UsePokemonDetailResponse>(`${apiBaseUrl}/${name}`, {
-    key: `pokemon-${name}`,
-  })
+  const key = () => `pokemons-${name.value}`
+
+  return useAsyncData(key, () =>
+    store.getOrFetchPokemon(name.value, apiBaseUrl),
+  )
 }
