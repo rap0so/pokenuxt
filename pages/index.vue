@@ -41,7 +41,7 @@
     >
       <button
         class="bg-purple-500 text-white px-4 py-2 rounded-md disabled:opacity-50"
-        :disabled="pending"
+        :disabled="pending || page === 1"
         @click="prevPage"
       >
         Previous
