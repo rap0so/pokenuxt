@@ -1,41 +1,28 @@
 import { computed, ref } from 'vue'
-import { usePokemons } from './usePokemons'
 import type { Filters } from '~/types/useFilteredPokemon.types'
-import type { UsePokemonResponseTypes } from '~/types/api/response.type'
+import type { UsePokemonResponse, UsePokemonResponseTypes } from '~/types/api/response.type'
 
-export function useFilteredPokemons(offset = 0, limit = 20) {
-  const { data: rawResult, pending, error } = usePokemons(offset, limit)
-
+export function useFilteredPokemons(rawResult: Ref<UsePokemonResponse | null>) {
   const filters = ref<Filters>({ name: '', types: [] })
 
-  // computed is the same as useMemo
+  // This computed is the same thing as a useMemo
   const filteredPokemons = computed(() => {
-    const list = rawResult.value?.results.map(p => ({
-      ...p,
-      spriteUrl: `${String(useRuntimeConfig().public.apiBaseUrl)}/sprites/pokemon/${p.name}.png`,
+    const list = rawResult.value?.results.map(pokemon => ({
+      ...pokemon,
+      spriteUrl: buildImageUrl(pokemon.url),
     })) || []
 
     return list.filter((pokemon) => {
       const filterName = filters.value.name.toLowerCase()
       const byName = pokemon.name.toLowerCase().includes(filterName)
-
-      const filterTypes = filters.value.types
-
-      const byType = filterByType(filterTypes, pokemon.types)
-
+      const byType = filterByType(filters.value.types, pokemon.types)
       return byName && byType
     })
   })
 
-  // return everything
   return {
     filteredPokemons,
-    pending,
-    error,
     filters,
-    // expose pagination controls, too
-    nextPage: () => { offset += limit },
-    prevPage: () => { if (offset >= limit) offset -= limit },
   }
 }
 
@@ -46,4 +33,10 @@ const filterByType = (filterTypes: string[], pokemonTypes: UsePokemonResponseTyp
     || filterTypes.some(filterType =>
       pokemonTypes?.some(({ type }) => type.name === filterType),
     )
+}
+
+const buildImageUrl = (pokemonUrl: string, use3D = false) => {
+  const id = pokemonUrl.match('/pokemon/([0-9]+)/')?.[1]
+  const threeDUrl = use3D ? '/other/home/' : ''
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${threeDUrl}/${id}.png`
 }

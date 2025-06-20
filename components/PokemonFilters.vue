@@ -31,8 +31,8 @@
           All Types
         </option>
         <option
-          v-for="optionType in types"
-          :key="optionType"
+          v-for="(optionType, index) in types"
+          :key="index"
           :value="optionType"
         >
           {{ optionType }}
@@ -44,8 +44,10 @@
 
 <script setup lang="ts">
 import { defineEmits, defineProps, ref, watch } from 'vue'
+import type { Filters } from '~/types/useFilteredPokemon.types'
 
-const props = defineProps<{ types: string[] }>()
+const props = defineProps<{ filters: Filters }>()
+const { types } = props.filters
 
 const emit = defineEmits<{
   (e: 'update:name' | 'update:type', value: string): void

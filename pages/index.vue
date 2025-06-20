@@ -4,10 +4,14 @@
       PokéNuxt
     </h1>
 
-    <PokemonFilters :types="['potato']" />
+    <PokemonFilters
+      v-model:filters="filters"
+      v-model:name="filters.name"
+      v-model:type="filters.types"
+    />
 
     <div v-if="pending">
-      Loading...
+      Loading page {{ page }}
     </div>
     <div v-else-if="error">
       Failed to load Pokémons
@@ -17,16 +21,16 @@
       class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
     >
       <PokemonCard
-        v-for="{ name } in pokemons?.results"
-        :key="name"
-        :name="name"
+        v-for="pokemon in filteredPokemons"
+        :key="pokemon.name"
+        :name="pokemon.name"
       >
         <template #sprite>
-          <!-- <img
+          <img
             :src="pokemon.spriteUrl"
             :alt="`${pokemon.name} sprite`"
             class="w-full h-full object-contain"
-          > -->
+          >
         </template>
       </PokemonCard>
     </ul>
@@ -37,13 +41,14 @@
     >
       <button
         class="bg-purple-500 text-white px-4 py-2 rounded-md disabled:opacity-50"
-        :disabled="offset === 0"
+        :disabled="pending"
         @click="prevPage"
       >
         Previous
       </button>
       <button
-        class="bg-purple-500 text-white px-4 py-2 rounded-md"
+        class="bg-purple-500 text-white px-4 py-2 rounded-md disabled:opacity-50"
+        :disabled="pending"
         @click="nextPage"
       >
         Next
@@ -53,28 +58,14 @@
 </template>
 
 <script setup lang="ts">
-import { usePokemons } from '~/composables/usePokemons'
+import { useFilteredPokemons } from '~/composables/useFilteredPokemons'
+import { usePagination } from '~/composables/usePagination'
+import PokemonFilters from '~/components/PokemonFilters.vue'
+import PokemonCard from '~/components/PokemonCard.vue'
 
-const limit = 20
-const offset = ref(0)
+const { offset, pageSize, nextPage, prevPage, page } = usePagination(0, 20)
 
-const { data: pokemons, pending, error } = usePokemons(offset.value, limit)
+const { data: rawResult, pending, error } = usePokemons(offset, pageSize)
 
-watch(offset, async () => {
-  const { data, pending: p, error: e } = await usePokemons(offset.value, limit)
-
-  pokemons.value = data.value
-  pending.value = p.value
-  error.value = e.value
-})
-
-function nextPage() {
-  offset.value += limit
-}
-
-function prevPage() {
-  if (offset.value >= limit) {
-    offset.value -= limit
-  }
-}
+const { filteredPokemons, filters } = useFilteredPokemons(rawResult)
 </script>
