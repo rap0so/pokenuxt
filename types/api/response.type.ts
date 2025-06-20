@@ -1,7 +1,16 @@
+export type UsePokemonResponseTypes = {
+  slot: number
+  type: {
+    name: string
+    url: string
+  }
+}
+
 export type UsePokemonResponse = {
   results: {
     name: string
     url: string
+    types: UsePokemonResponseTypes[]
   }[]
   count: number
   next: string | null

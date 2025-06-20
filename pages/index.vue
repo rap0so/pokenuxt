@@ -1,8 +1,10 @@
 <template>
   <main class="p-4">
-    <h1 class="text-2xl font-bold mb-4">
+    <h1 class="text-3xl font-extrabold mb-6 text-purple-700">
       PokéNuxt
     </h1>
+
+    <PokemonFilters :types="['potato']" />
 
     <div v-if="pending">
       Loading...
@@ -14,30 +16,39 @@
       v-else
       class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
     >
-      <li
-        v-for="pokemon in pokemons?.results"
-        :key="pokemon.name"
-        class="p-2 border rounded"
+      <PokemonCard
+        v-for="{ name } in pokemons?.results"
+        :key="name"
+        :name="name"
       >
-        {{ pokemon.name }}
-      </li>
+        <template #sprite>
+          <!-- <img
+            :src="pokemon.spriteUrl"
+            :alt="`${pokemon.name} sprite`"
+            class="w-full h-full object-contain"
+          > -->
+        </template>
+      </PokemonCard>
     </ul>
 
-    <div class="flex gap-4 mt-6">
+    <nav
+      class="flex justify-center gap-4 mt-8"
+      aria-label="Pagination"
+    >
       <button
-        class="bg-gray-800 text-white px-4 py-2 rounded disabled:opacity-50"
+        class="bg-purple-500 text-white px-4 py-2 rounded-md disabled:opacity-50"
         :disabled="offset === 0"
         @click="prevPage"
       >
         Previous
       </button>
       <button
-        class="bg-gray-800 text-white px-4 py-2 rounded"
+        class="bg-purple-500 text-white px-4 py-2 rounded-md"
         @click="nextPage"
       >
         Next
       </button>
-    </div>
+    </nav>
   </main>
 </template>
 
@@ -55,8 +66,6 @@ watch(offset, async () => {
   pokemons.value = data.value
   pending.value = p.value
   error.value = e.value
-
-  console.log(data)
 })
 
 function nextPage() {
