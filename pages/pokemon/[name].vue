@@ -1,12 +1,19 @@
 <template>
   <main class="p-4 min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-purple-100 via-pink-100 to-yellow-50">
     <div
-      v-if="pokemon"
+      v-if="pending"
+      class="text-xl text-gray-700 mt-24"
+    >
+      Loading...
+    </div>
+
+    <div
+      v-else-if="pokemon"
       class="w-full max-w-3xl bg-white/80 rounded-2xl shadow-lg p-6 mt-4 flex flex-col items-center"
       aria-labelledby="pokemon-title"
     >
       <img
-        :src="artworkUrl"
+        :src="pokemon.spriteUrl"
         :alt="`Official artwork of ${pokemon.name}`"
         class="w-50 h-48 object-contain drop-shadow-lg mb-2"
         loading="lazy"
@@ -60,19 +67,13 @@
         </ul>
       </section>
     </div>
-    <div
-      v-else-if="pending"
-      class="text-xl text-gray-700 mt-24"
-    >
-      Loading...
-    </div>
+
     <div
       v-else
       class="text-xl text-red-700 mt-24"
     >
       Pokémon not found.
     </div>
-    <!-- Back button -->
     <button
       class="mt-8 bg-purple-600 text-white font-bold px-6 py-2 rounded-xl shadow hover:bg-purple-800 focus:outline focus:ring-2 focus:ring-purple-400"
       @click="goHome"
@@ -93,12 +94,6 @@ const router = useRouter()
 const name = computed(() => route.params.name as string)
 
 const { data: pokemon, pending } = usePokemonDetail(name)
-
-const artworkUrl = computed(() => {
-  const sprites = pokemon?.value?.sprites
-
-  return sprites?.other['official-artwork']?.front_default || sprites?.other.home?.front_default || ''
-})
 
 function goHome() {
   router.push('/')

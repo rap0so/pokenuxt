@@ -1,7 +1,6 @@
-const buildImageUrl = (pokemonUrl: string, use3D = false) => {
+const buildImageUrl = (pokemonUrl: string) => {
   const id = pokemonUrl.match('/pokemon/([0-9]+)/')?.[1]
-  const threeDUrl = use3D ? '/other/home/' : ''
-  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${threeDUrl}/${id}.png`
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
 }
 
 export default buildImageUrl

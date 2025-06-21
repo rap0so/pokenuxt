@@ -1,22 +1,62 @@
 import { defineStore } from 'pinia'
-import type { UsePokemonDetailResponse, UsePokemonResponse } from '~/types/api/response.type'
+import type { PokemonDetailResponse, PokemonResponse } from '~/types/api/response.type'
+import transformDetailIntoOwn from '~/utils/transformDetailIntoOwn'
+import buildImageUrl from '~/utils/buildImageUrl'
+import type { OwnPokemon } from '~/types/pokemon.types'
 
 export const usePokemonStore = defineStore('pokemon', {
   state: () => ({
-    pages: {} as Record<number, UsePokemonResponse>,
-    pokemons: {} as Record<string, UsePokemonDetailResponse>,
+    pages: {} as Record<number, OwnPokemon[]>,
+    pokemons: {} as Record<string, OwnPokemon>,
   }),
   actions: {
-    async getOrFetchPage(offset: number, limit = 20, apiBaseUrl: string) {
+    async getPokemonStored(name: string) {
+      if (!name) {
+        return []
+      }
+
+      const foundOnPages = Object.values(this.pages)
+        .flatMap(page => page)
+        .filter(pokemon => pokemon.name.includes(name))
+
+      if (foundOnPages.length) {
+        return foundOnPages
+      }
+
+      const foundOnSingles = Object.values(this.pokemons)
+        .filter(pokemon => pokemon.name.includes(name))
+
+      if (foundOnSingles.length) {
+        return foundOnSingles
+      }
+
+      const fetchedPokemon = await this.getOrFetchPokemon(name, String(useRuntimeConfig().public.apiBaseUrl))
+
+      if (fetchedPokemon) {
+        return [fetchedPokemon]
+      }
+
+      return []
+    },
+    async getOrFetchPage(offset: number, limit = 20) {
       if (this.pages[offset]) {
         return this.pages[offset]
       }
 
+      const apiUrl = String(useRuntimeConfig().public.apiBaseUrl)
       // In this case, we are using $fetch because we don't need the additional features of useFetch. We are only fetching and storing the data
-      const data = await $fetch<UsePokemonResponse>(`${apiBaseUrl}/pokemon?offset=${offset}&limit=${limit}`)
+      const data = await $fetch<PokemonResponse>(`${apiUrl}/pokemon?offset=${offset}&limit=${limit}`)
 
-      this.pages[offset] = data
-      return data
+      const list: OwnPokemon[] = data.results.map(pokemon =>
+        ({
+          ...pokemon,
+          spriteUrl: buildImageUrl(pokemon.url),
+        }),
+      )
+
+      this.pages[offset] = list
+
+      return list
     },
     async getOrFetchPokemon(name: string, apiBaseUrl: string) {
       if (!name) {
@@ -27,11 +67,13 @@ export const usePokemonStore = defineStore('pokemon', {
         return this.pokemons[name]
       }
 
-      const data = await $fetch<UsePokemonDetailResponse>(`${apiBaseUrl}/pokemon/${name}`)
+      const data = await $fetch<PokemonDetailResponse>(`${apiBaseUrl}/pokemon/${name}`)
 
-      this.pokemons[name] = data
+      const transformedPokemon = transformDetailIntoOwn(data, apiBaseUrl)
 
-      return data
+      this.pokemons[name] = transformedPokemon
+
+      return transformedPokemon
     },
   },
   persist: true,

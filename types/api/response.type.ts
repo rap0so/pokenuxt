@@ -1,4 +1,4 @@
-export type UsePokemonResponseTypes = {
+export type PokemonResponseTypes = {
   slot: number
   type: {
     name: string
@@ -9,10 +9,10 @@ export type UsePokemonResponseTypes = {
 export type PokemonResult = {
   name: string
   url: string
-  types: UsePokemonResponseTypes[]
+  types: PokemonResponseTypes[]
 }
 
-export type UsePokemonResponse = {
+export type PokemonResponse = {
   results: PokemonResult[]
   count: number
   next: string | null
@@ -23,7 +23,7 @@ type UsePokemonDetailSpritesOther = {
   front_default: string | null
 }
 
-export type UsePokemonDetailResponse = {
+export type PokemonDetailResponse = {
   id: number
   name: string
   height: number

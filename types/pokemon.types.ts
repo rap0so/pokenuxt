@@ -1,8 +1,9 @@
-import type { UsePokemonResponseTypes } from '~/types/api/response.type'
+import type { PokemonDetailResponse, PokemonResponseTypes } from '~/types/api/response.type'
 
 export type OwnPokemon = {
   spriteUrl: string
   name: string
   url: string
-  types?: UsePokemonResponseTypes[]
+  types?: PokemonResponseTypes[]
+  stats?: PokemonDetailResponse['stats']
 }
