@@ -1,15 +1,11 @@
 import type { Ref } from 'vue'
-import { useAsyncData, useRuntimeConfig } from '#app'
-import { usePokemonStore } from '~/stores/pokemon'
+import { useAsyncData } from '#app'
 
 export const usePokemonDetail = (name: Ref<string>) => {
-  const config = useRuntimeConfig()
-  const apiBaseUrl = String(config.public.apiBaseUrl)
-  const store = usePokemonStore()
+  const { store, apiBaseUrl } = usePokemonApiContext()
 
-  const key = () => `pokemons-${name.value}`
-
-  return useAsyncData(key, () =>
+  return useAsyncData(`pokemons-${name.value}`, () =>
     store.getOrFetchPokemon(name.value, apiBaseUrl),
+  { watch: [name] },
   )
 }
