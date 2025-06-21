@@ -50,4 +50,10 @@ const nameSearch = ref('')
 const handleSearch = () => {
   emit('update:nameSearch', nameSearch.value)
 }
+
+watch(nameSearch, () => {
+  if (!nameSearch.value) {
+    emit('update:nameSearch', nameSearch.value)
+  }
+})
 </script>
