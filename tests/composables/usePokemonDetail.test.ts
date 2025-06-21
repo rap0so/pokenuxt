@@ -1,48 +1,52 @@
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
-import { useFetch, useRuntimeConfig } from '#app'
-import { usePokemonDetail } from '~/composables/usePokemonDetail'
+import { ref } from 'vue'
+import type { Mock } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { usePokemonDetail } from '@/composables/usePokemonDetail'
+import { usePokemonStore } from '@/stores/pokemon'
+import { useAsyncData } from '#app'
 
-vi.mock('#app', () => ({
-  useFetch: vi.fn(),
-  useRuntimeConfig: vi.fn(),
+vi.mock('@/stores/pokemon', () => ({
+  usePokemonStore: vi.fn(),
 }))
 
-const mockApiBaseUrl = 'https://asdasdasd.com'
+vi.mock('#app', () => ({
+  useAsyncData: vi.fn(),
+  useRuntimeConfig: () => ({
+    public: {
+      apiBaseUrl: 'https://pokeapi.co/api/v2',
+    },
+  }),
+}))
 
 describe('usePokemonDetail', () => {
+  const mockGetOrFetchPokemon = vi.fn()
+
   beforeEach(() => {
-    (useRuntimeConfig as Mock).mockReturnValue({
-      public: { apiBaseUrl: mockApiBaseUrl },
+    vi.clearAllMocks()
+
+    ;(usePokemonStore as unknown as Mock).mockReturnValue({
+      getOrFetchPokemon: mockGetOrFetchPokemon,
     })
   })
 
-  it.only('calls useFetch with correct URL and key', () => {
-    const fakeResponse = { data: { value: { name: 'bulbasaur' } } };
+  it('should call getOrFetchPokemon correctly', () => {
+    const name = ref('bulbasaur')
 
-    (useFetch as Mock).mockReturnValue(fakeResponse)
+    const expectedUrl = 'https://pokeapi.co/api/v2'
 
-    const result = usePokemonDetail('bulbasaur')
+    const mockAsyncDataResponse = { data: ref('someData') }
+    ;(useAsyncData as Mock).mockReturnValue(mockAsyncDataResponse)
 
-    expect(useFetch).toHaveBeenCalledWith(
-      mockApiBaseUrl + '/bulbasaur',
-      expect.objectContaining({ key: 'pokemon-bulbasaur' }),
-      expect.stringContaining('$'),
+    const result = usePokemonDetail(name)
+
+    const fetchFn = (useAsyncData as Mock).mock.calls[0][1]
+    fetchFn()
+
+    expect(mockGetOrFetchPokemon).toHaveBeenCalledWith(
+      'bulbasaur',
+      expectedUrl,
     )
-    expect(result).toBe(fakeResponse)
-  })
 
-  it.skip('uses the correct key when the pokemon name has spaces', () => {
-    const fakeResponse = { data: { value: { name: 'Mr. Mime' } } };
-
-    (useFetch as Mock).mockReturnValue(fakeResponse)
-
-    const result = usePokemonDetail('Mr. Mime')
-
-    expect(useFetch).toHaveBeenCalledWith(
-      mockApiBaseUrl + '/mr.-mime',
-      expect.objectContaining({ key: 'pokemon-mr.-mime' }),
-      expect.stringContaining('$'),
-    )
-    expect(result).toBe(fakeResponse)
+    expect(result).toBe(mockAsyncDataResponse)
   })
 })
