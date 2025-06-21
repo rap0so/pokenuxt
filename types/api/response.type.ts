@@ -6,12 +6,14 @@ export type UsePokemonResponseTypes = {
   }
 }
 
+export type PokemonResult = {
+  name: string
+  url: string
+  types: UsePokemonResponseTypes[]
+}
+
 export type UsePokemonResponse = {
-  results: {
-    name: string
-    url: string
-    types: UsePokemonResponseTypes[]
-  }[]
+  results: PokemonResult[]
   count: number
   next: string | null
   previous: string | null
