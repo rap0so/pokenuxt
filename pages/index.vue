@@ -4,11 +4,15 @@
       PokéNuxt
     </h1>
 
-    <PokemonFilters
-      v-model:filters="filters"
-      v-model:name="filters.name"
-      v-model:type="filters.types"
-    />
+    <div class="flex gap-3">
+      <PokemonSearch
+        v-model:name-search="nameSearch"
+      />
+
+      <PokemonFilters
+        v-model:selected-type="selectedType"
+      />
+    </div>
 
     <div v-if="pending">
       Loading page {{ page }}
@@ -21,7 +25,7 @@
       class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
     >
       <PokemonCard
-        v-for="pokemon in filteredPokemons"
+        v-for="pokemon in pokemonList"
         :key="pokemon.name"
         :name="pokemon.name"
       >
@@ -36,6 +40,7 @@
     </ul>
 
     <nav
+      v-if="!nameSearch"
       class="flex justify-center gap-4 mt-8"
       aria-label="Pagination"
     >
@@ -58,14 +63,52 @@
 </template>
 
 <script setup lang="ts">
-import { useFilteredPokemons } from '~/composables/useFilteredPokemons'
 import { usePagination } from '~/composables/usePagination'
+import { usePokemons } from '~/composables/usePokemons'
+import { useSearchPokemon } from '~/composables/useSearchPokemon'
+import { usePokemonsByType } from '~/composables/usePokemonsByType'
 import PokemonFilters from '~/components/PokemonFilters.vue'
 import PokemonCard from '~/components/PokemonCard.vue'
+import PokemonSearch from '~/components/PokemonSearch.vue'
+import type { OwnPokemon } from '~/types/pokemon.types'
+import type { PokemonTypes } from '~/types/api/response.type'
+
+const notFound = ref(false)
+const error = ref(false)
+const nameSearch = ref('')
+const selectedType = ref<PokemonTypes>({
+  name: '',
+  url: '',
+})
 
 const { offset, pageSize, nextPage, prevPage, page } = usePagination(0, 20)
 
-const { data: rawResult, pending, error } = usePokemons(offset, pageSize)
+const { data: rawResult, pending, error: responseError } = usePokemons(offset, pageSize)
+if (responseError.value) {
+  error.value = true
+}
 
-const { filteredPokemons, filters } = useFilteredPokemons(rawResult)
+const pokemonList = ref<OwnPokemon[]>([])
+
+watchEffect(async () => {
+  if (nameSearch.value) {
+    const foundPokemon = useSearchPokemon(nameSearch.value)
+    if (!foundPokemon.data.value) {
+      notFound.value = true
+      return
+    }
+    pokemonList.value = foundPokemon.data.value
+  }
+  else if (selectedType.value.name) {
+    const pokemonsByType = usePokemonsByType(selectedType)
+    if (!pokemonsByType.data.value) {
+      // TODO: trigger toast
+      return
+    }
+    pokemonList.value = pokemonsByType.data.value
+  }
+  else {
+    pokemonList.value = rawResult.value || []
+  }
+})
 </script>
