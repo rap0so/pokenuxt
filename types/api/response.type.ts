@@ -6,21 +6,44 @@ export type PokemonResponseTypes = {
   }
 }
 
-export type PokemonResult = {
-  name: string
-  url: string
-  types: PokemonResponseTypes[]
-}
-
-export type PokemonResponse = {
-  results: PokemonResult[]
+export type DefaultResponse<T> = {
   count: number
   next: string | null
   previous: string | null
+  results: T
 }
+
+export type PokemonResult =
+  {
+    name: string
+    url: string
+    types: PokemonResponseTypes[]
+  }
+
+export type PokemonResponse = DefaultResponse<PokemonResult[]>
+
+export type PokemonTypes = {
+  name: string
+  url: string
+}
+
+export type PokemonTypesResponse =
+  DefaultResponse<PokemonTypes[]>
 
 type UsePokemonDetailSpritesOther = {
   front_default: string | null
+}
+
+export type PokemonOnType = {
+  name: string
+  url: string
+}
+
+export type PokemonsOnTypeResponse = {
+  pokemon: {
+    pokemon: PokemonOnType
+    slot: number
+  }[]
 }
 
 export type PokemonDetailResponse = {

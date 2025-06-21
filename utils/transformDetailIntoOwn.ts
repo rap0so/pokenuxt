@@ -1,20 +1,22 @@
 import buildImageUrl from './buildImageUrl'
-import type { PokemonResult, PokemonDetailResponse } from '~/types/api/response.type'
+import type { PokemonResult, PokemonDetailResponse, PokemonOnType } from '~/types/api/response.type'
 import type { OwnPokemon } from '~/types/pokemon.types'
 
-const transformDetailIntoOwn = (pokemon: PokemonResult | PokemonDetailResponse, apiBaseUrl: string): OwnPokemon => {
+type PokemonData = PokemonResult | PokemonDetailResponse | PokemonOnType
+
+const transformDetailIntoOwn = (pokemonData: PokemonData, apiBaseUrl: string): OwnPokemon => {
   let pokemonSpriteUrl: string | undefined = undefined
 
-  if ('sprites' in pokemon && pokemon.sprites?.other?.['official-artwork']?.front_default) {
-    pokemonSpriteUrl = pokemon.sprites.other['official-artwork'].front_default
+  if ('sprites' in pokemonData && pokemonData.sprites?.other?.['official-artwork']?.front_default) {
+    pokemonSpriteUrl = pokemonData.sprites.other['official-artwork'].front_default
   }
 
   return {
-    name: pokemon.name,
-    url: `${apiBaseUrl}/pokemon/${pokemon.name}`,
-    types: pokemon.types,
-    spriteUrl: pokemonSpriteUrl ?? buildImageUrl('url' in pokemon ? pokemon.url : ''),
-    stats: 'stats' in pokemon ? pokemon.stats : [],
+    name: pokemonData.name,
+    url: `${apiBaseUrl}/pokemon/${pokemonData.name}`,
+    types: 'types' in pokemonData ? pokemonData.types : [],
+    spriteUrl: pokemonSpriteUrl ?? buildImageUrl('url' in pokemonData ? pokemonData.url : ''),
+    stats: 'stats' in pokemonData ? pokemonData.stats : [],
   }
 }
 
