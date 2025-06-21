@@ -1,11 +1,9 @@
-![logo.png](public/logo.png){width=30%}
+# PokéNuxt
+<img src="public/logo.png" alt="logo" style="width:30%;">
 
-# PokéNuxt – Take‑Home Challenge
 
-Welcome! Your mission is to build **PokéNuxt**—a Nuxt 3 web app styled with UnoCSS (Tailwind‑like) that fetches data from the public [PokeAPI](https://pokeapi.co).  
-The project is intentionally scoped so you can complete it in about four days. Feel free to install **any dependency** that helps you.
-
-We recommend you to use **Typescript** for the whole project, but it’s not mandatory.
+This is the **PokéNuxt**—a Nuxt 3 web app styled with UnoCSS (Tailwind‑like) that fetches data from the public [PokeAPI](https://pokeapi.co).  
+Build with **Typescript** 
 
 ---
 
@@ -27,7 +25,7 @@ We recommend you to use **Typescript** for the whole project, but it’s not man
 
 ---
 
-## 🗺️ What to Build
+## 🗺️ What is Build
 
 | # | Feature                                                                                      | Why we ask for it                 |
 |---|----------------------------------------------------------------------------------------------|-----------------------------------|
@@ -74,16 +72,5 @@ We recommend you to use **Typescript** for the whole project, but it’s not man
 
         yarn lint            # Check code style
         yarn lint:fix        # Fix code style
-
----
-
-## 📨 Submission
-
-1. Push code to **your own** Git repo, on the platform of your choice (GitHub, GitLab, etc.)
-2. Send us the link to your repo so we can review the challenge. Make sure we can access it. 😊
-
----
-
-Good luck & have fun! 🍀
 
 ![Pikachu](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png)
