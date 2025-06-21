@@ -1,22 +1,9 @@
 <template>
   <form
+    v-if="!pending && !error"
     class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6"
     @submit.prevent
   >
-    <div class="flex flex-col">
-      <label
-        for="nameFilter"
-        class="text-sm font-medium mb-1"
-      >Filter by name</label>
-      <input
-        id="nameFilter"
-        v-model="name"
-        type="text"
-        placeholder="e.g. Pikachu"
-        class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
-      >
-    </div>
-
     <div class="flex flex-col">
       <label
         for="typeFilter"
@@ -24,10 +11,11 @@
       >Filter by type</label>
       <select
         id="typeFilter"
-        v-model="type"
+        v-model="selectedType"
         class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
+        @change="handleTypeChange"
       >
-        <option value="">
+        <option :value="defaultValue">
           All Types
         </option>
         <option
@@ -35,7 +23,7 @@
           :key="index"
           :value="optionType"
         >
-          {{ optionType }}
+          {{ optionType.name }}
         </option>
       </select>
     </div>
@@ -43,20 +31,23 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps, ref, watch } from 'vue'
-import type { Filters } from '~/types/useFilteredPokemon.types'
+import { defineEmits, ref } from 'vue'
+import { usePokemonsTypes } from '~/composables/usePokemonsTypes'
+import type { PokemonTypes } from '~/types/api/response.type'
 
-const props = defineProps<{ filters: Filters }>()
-const { types } = props.filters
+const { data: types, pending, error } = usePokemonsTypes()
+const defaultValue = {
+  name: '',
+  url: '',
+}
 
 const emit = defineEmits<{
-  (e: 'update:name' | 'update:type', value: string): void
+  (e: 'update:selected-type', value: PokemonTypes): void
 }>()
 
-const name = ref('')
-const type = ref('')
+const selectedType = ref<PokemonTypes>(defaultValue)
 
-// Watch for changes and emit
-watch(name, val => emit('update:name', val))
-watch(type, val => emit('update:type', val))
+function handleTypeChange() {
+  emit('update:selected-type', selectedType.value as PokemonTypes)
+}
 </script>
