@@ -1,6 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxt/test-utils', '@unocss/nuxt', '@pinia/nuxt'],
+  modules: [
+    '@nuxt/eslint',
+    '@nuxt/test-utils',
+    '@unocss/nuxt',
+    '@pinia/nuxt',
+    '@nuxt/image',
+  ],
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
@@ -13,5 +19,12 @@ export default defineNuxtConfig({
     config: {
       stylistic: true,
     },
+  },
+  image: {
+    provider: 'ipx',
+    domains: [
+      'raw.githubusercontent.com',
+      'pokeapi.co',
+    ],
   },
 })

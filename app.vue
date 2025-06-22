@@ -28,6 +28,11 @@ useHead({
       type: 'image/x-icon',
       href: '/favicon.ico', // Setting the favicon for the website
     },
+    {
+      rel: 'preload',
+      as: 'image',
+      href: '/loading.gif',
+    },
   ],
 })
 </script>
