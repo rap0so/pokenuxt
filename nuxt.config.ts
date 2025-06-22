@@ -20,11 +20,4 @@ export default defineNuxtConfig({
       stylistic: true,
     },
   },
-  image: {
-    provider: 'ipx',
-    domains: [
-      'raw.githubusercontent.com',
-      'pokeapi.co',
-    ],
-  },
 })
