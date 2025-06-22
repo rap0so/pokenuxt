@@ -94,15 +94,7 @@ const pokemonList = ref<OwnPokemon[]>([])
 watchEffect(async () => {
   paginatedMode.value = false
 
-  if (nameSearch.value) {
-    const foundPokemon = await useSearchPokemon(nameSearch.value)
-    if (!foundPokemon) {
-      notFound.value = true
-      return
-    }
-    pokemonList.value = foundPokemon
-  }
-  else if (selectedType.value.name) {
+  if (selectedType.value.name) {
     const pokemonsByType = usePokemonsByType(selectedType)
     if (!pokemonsByType.data.value) {
       // TODO: trigger toast
@@ -113,6 +105,16 @@ watchEffect(async () => {
   else {
     paginatedMode.value = true
     pokemonList.value = rawResult.value || []
+  }
+
+  if (nameSearch.value) {
+    paginatedMode.value = false
+    const foundPokemon = await useSearchPokemon(nameSearch.value)
+    if (!foundPokemon) {
+      notFound.value = true
+      return
+    }
+    pokemonList.value = foundPokemon
   }
 })
 </script>

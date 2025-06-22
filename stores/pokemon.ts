@@ -96,9 +96,9 @@ export const usePokemonStore = defineStore('pokemon', {
         return this.pokemons[name]
       }
 
-      const { data } = await useFetch<PokemonDetailResponse>(`${apiBaseUrl}/pokemon/${name}`, { key: `pokemon-${name}` })
+      const { data, error } = await useFetch<PokemonDetailResponse>(`${apiBaseUrl}/pokemon/${name}`, { key: `pokemon-${name}` })
 
-      if (!data.value) {
+      if (!data.value || error.value) {
         return
       }
 
