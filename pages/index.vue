@@ -49,19 +49,20 @@
         :disabled="pending || page === 1"
         @click="prevPage"
       >
-        Previous
+        {{ $t('pagination.previous') }}
       </BaseButton>
       <BaseButton
         :disabled="pending"
         @click="nextPage"
       >
-        Next
+        {{ $t('pagination.next') }}
       </BaseButton>
     </nav>
   </main>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { usePagination } from '~/composables/usePagination'
 import { usePokemons } from '~/composables/usePokemons'
 import { useSearchPokemon } from '~/composables/useSearchPokemon'
@@ -73,6 +74,8 @@ import PokemonSearch from '~/components/PokemonSearch.vue'
 import BaseButton from '~/components/BaseButton.vue'
 import type { OwnPokemon } from '~/types/pokemon.types'
 import type { PokemonTypes } from '~/types/api/response.type'
+
+const { t } = useI18n()
 
 const showPaginationControls = ref(true)
 const error = ref('')
@@ -116,7 +119,7 @@ watchEffect(async () => {
 watch(pokemonList, () => {
   const listIsEmpty = !pokemonList.value?.length
   if (listIsEmpty && !selectedType.value.name) {
-    error.value = 'Something went wrong. Try again soon.'
+    error.value = t('error.noResults')
   }
 })
 </script>

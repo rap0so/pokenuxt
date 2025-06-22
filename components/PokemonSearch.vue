@@ -5,14 +5,14 @@
   >
     <div class="flex flex-col">
       <BaseLabel for="nameSearch">
-        Search by name
+        {{ $t('search.label') }}
       </BaseLabel>
       <div class="flex">
         <input
           id="nameSearch"
           v-model="nameSearch"
           type="text"
-          placeholder="e.g. Pikachu"
+          :placeholder="$t('search.placeholder')"
           class="box-bg rounded-l-xl rounded-r-none"
         >
 

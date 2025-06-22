@@ -28,7 +28,7 @@
       </h1>
       <div
         class="flex gap-2 mb-4"
-        aria-label="Types"
+        :aria-label="$t('detail.types')"
       >
         <span
           v-for="type in pokemon.types"
@@ -47,7 +47,7 @@
           id="base-stats-heading"
           class="text-lg font-bold mb-2 text-gray-700"
         >
-          Base Stats
+          {{ $t('detail.baseStats') }}
         </h2>
         <ul class="space-y-2">
           <li
@@ -72,11 +72,11 @@
       v-else
       class="text-xl text-red-700 mt-24"
     >
-      <BaseError :label="`Failed to find ${name}`" />
+      <BaseError :label="$t('detail.notFound')" />
     </div>
     <div class="mt-3">
       <BaseButton @click="goHome">
-        ← Back
+        {{ $t('detail.back') }}
       </BaseButton>
     </div>
   </main>

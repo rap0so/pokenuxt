@@ -6,7 +6,7 @@
     role="button"
     @click="theme.toggle()"
   >
-    {{ theme.dark ? '🌙 Dark' : '☀️ Light' }}
+    {{ theme.dark ? `🌙 ${$t('theme.dark')}` : `☀️ ${$t('theme.light')}` }}
   </button>
 </template>
 

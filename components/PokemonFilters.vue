@@ -6,7 +6,7 @@
   >
     <div class="flex flex-col">
       <BaseLabel for="typeFilter">
-        Filter by type
+        {{ $t('filter.label') }}
       </BaseLabel>
       <select
         id="typeFilter"
@@ -15,7 +15,7 @@
         @change="handleTypeChange"
       >
         <option :value="defaultValue">
-          All Types
+          {{ $t('filter.all') }}
         </option>
         <option
           v-for="(optionType, index) in types"

@@ -4,7 +4,10 @@
 
     <NuxtLayout>
       <div class="absolute top-4 right-4">
-        <ToggleThemeButton />
+        <div class="flex gap-3">
+          <ToggleThemeButton />
+          <LanguageSwitcher />
+        </div>
       </div>
       <NuxtPage />
     </NuxtLayout>

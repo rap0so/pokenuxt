@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@pinia/nuxt',
     '@nuxt/image',
+    '@nuxtjs/i18n',
   ],
   devtools: { enabled: true },
   runtimeConfig: {
@@ -19,5 +20,14 @@ export default defineNuxtConfig({
     config: {
       stylistic: true,
     },
+  },
+  i18n: {
+    strategy: 'no_prefix',
+    locales: [
+      { code: 'en', name: 'English', file: 'en.json' },
+      { code: 'pt', name: 'Português', file: 'pt.json' },
+      { code: 'fr', name: 'Français', file: 'fr.json' },
+    ],
+    defaultLocale: 'en',
   },
 })

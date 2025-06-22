@@ -1,0 +1,29 @@
+{
+  "search": {
+    "label": "Buscar por nome",
+    "placeholder": "ex: Pikachu",
+    "button": "Buscar"
+  },
+  "filter": {
+    "label": "Filtrar por tipo",
+    "all": "Todos os tipos"
+  },
+  "pagination": {
+    "previous": "Anterior",
+    "next": "Próximo"
+  },
+  "detail": {
+    "types": "Tipos",
+    "baseStats": "Estatísticas Base",
+    "back": "← Voltar",
+    "notFound": "Pokémon não encontrado."
+  },
+  "error": {
+    "generic": "Algo deu errado. Tente novamente em breve.",
+    "serverError": "Falha na requisição, por favor tente novamente."
+  },
+  "theme": {
+    "light": "Claro",
+    "dark": "Escuro"
+  }
+}
