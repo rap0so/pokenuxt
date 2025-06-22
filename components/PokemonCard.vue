@@ -6,10 +6,13 @@
     @click="navigateToDetail"
   >
     <div class="relative w-24 h-24 mb-2">
-      <slot name="sprite">
-        <!-- // TODO:  Add a Placeholder or spinner until sprite is loaded -->
-        <div class="w-full h-full bg-white/50 rounded-full animate-pulse" />
-      </slot>
+      <NuxtImg
+        :src="spriteUrl"
+        :alt="`${name} sprite`"
+        class="w-full h-full"
+        placeholder="/loading.gif"
+        placeholder-class="rounded-full w-full h-full object-cover opacity-50"
+      />
     </div>
     <h3 class="text-lg font-semibold text-purple-800 capitalize drop-shadow-[1px_1px_2px_rgba(0,0,0,0.2)]">
       {{ name }}
@@ -20,7 +23,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
-const props = defineProps<{ name: string }>()
+const props = defineProps<{ name: string, spriteUrl: string }>()
 const router = useRouter()
 
 function navigateToDetail() {

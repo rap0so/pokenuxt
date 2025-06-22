@@ -12,19 +12,20 @@
       class="w-full max-w-3xl bg-white/80 rounded-2xl shadow-lg p-6 mt-4 flex flex-col items-center"
       aria-labelledby="pokemon-title"
     >
-      <img
+      <NuxtImg
         :src="pokemon.spriteUrl"
         :alt="`Official artwork of ${pokemon.name}`"
         class="w-50 h-48 object-contain drop-shadow-lg mb-2"
         loading="lazy"
-      >
+        placeholder="/loading.gif"
+        placeholder-class="w-50 h-48 opacity-50"
+      />
       <h1
         id="pokemon-title"
         class="text-3xl font-extrabold text-purple-700 capitalize mb-1"
       >
         {{ pokemon.name }}
       </h1>
-      <!-- Types -->
       <div
         class="flex gap-2 mb-4"
         aria-label="Types"
@@ -38,7 +39,6 @@
           {{ type.type.name }}
         </span>
       </div>
-      <!-- Stats -->
       <section
         class="w-full"
         aria-labelledby="base-stats-heading"

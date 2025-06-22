@@ -28,15 +28,8 @@
         v-for="pokemon in pokemonList"
         :key="pokemon.name"
         :name="pokemon.name"
-      >
-        <template #sprite>
-          <img
-            :src="pokemon.spriteUrl"
-            :alt="`${pokemon.name} sprite`"
-            class="w-full h-full object-contain"
-          >
-        </template>
-      </PokemonCard>
+        :sprite-url="pokemon.spriteUrl"
+      />
     </ul>
 
     <nav

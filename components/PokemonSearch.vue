@@ -18,10 +18,13 @@
         >
 
         <BaseButton
+          name="search"
+          aria-label="Search"
           variant="search"
           @click="handleSearch"
         >
           <svg
+            name="search-icon"
             class="w-6 h-6 inline-block"
             fill="none"
             stroke="currentColor"
