@@ -40,7 +40,7 @@
     </ul>
 
     <nav
-      v-if="!nameSearch"
+      v-if="paginatedMode"
       class="flex justify-center gap-4 mt-8"
       aria-label="Pagination"
     >
@@ -73,6 +73,7 @@ import PokemonSearch from '~/components/PokemonSearch.vue'
 import type { OwnPokemon } from '~/types/pokemon.types'
 import type { PokemonTypes } from '~/types/api/response.type'
 
+const paginatedMode = ref(false)
 const notFound = ref(false)
 const error = ref(false)
 const nameSearch = ref('')
@@ -91,13 +92,15 @@ if (responseError.value) {
 const pokemonList = ref<OwnPokemon[]>([])
 
 watchEffect(async () => {
+  paginatedMode.value = false
+
   if (nameSearch.value) {
-    const foundPokemon = useSearchPokemon(nameSearch.value)
-    if (!foundPokemon.data.value) {
+    const foundPokemon = await useSearchPokemon(nameSearch.value)
+    if (!foundPokemon) {
       notFound.value = true
       return
     }
-    pokemonList.value = foundPokemon.data.value
+    pokemonList.value = foundPokemon
   }
   else if (selectedType.value.name) {
     const pokemonsByType = usePokemonsByType(selectedType)
@@ -108,6 +111,7 @@ watchEffect(async () => {
     pokemonList.value = pokemonsByType.data.value
   }
   else {
+    paginatedMode.value = true
     pokemonList.value = rawResult.value || []
   }
 })

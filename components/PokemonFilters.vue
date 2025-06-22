@@ -1,6 +1,6 @@
 <template>
   <form
-    v-if="!pending && !error"
+    v-if="types"
     class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6"
     @submit.prevent
   >
@@ -35,7 +35,8 @@ import { defineEmits, ref } from 'vue'
 import { usePokemonsTypes } from '~/composables/usePokemonsTypes'
 import type { PokemonTypes } from '~/types/api/response.type'
 
-const { data: types, pending, error } = usePokemonsTypes()
+const types = await usePokemonsTypes()
+
 const defaultValue = {
   name: '',
   url: '',

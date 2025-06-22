@@ -45,10 +45,12 @@ export const usePokemonStore = defineStore('pokemon', {
         return this.pages[offset]
       }
 
-      // In this case, we are using $fetch because we don't need the additional features of useFetch. We are only fetching and storing the data
-      const data = await $fetch<PokemonResponse>(`${apiBaseUrl}/pokemon?offset=${offset}&limit=${limit}`)
+      const { data } = await useFetch<PokemonResponse>(`${apiBaseUrl}/pokemon?offset=${offset}&limit=${limit}`)
+      if (!data.value) {
+        return []
+      }
 
-      const list: OwnPokemon[] = data.results.map(pokemon =>
+      const list: OwnPokemon[] = data.value.results.map(pokemon =>
         ({
           ...pokemon,
           spriteUrl: buildImageUrl(pokemon.url),
@@ -64,20 +66,24 @@ export const usePokemonStore = defineStore('pokemon', {
         return this.types
       }
 
-      const data = await $fetch<PokemonTypesResponse>(`${apiBaseUrl}/type`)
+      const { data } = await useFetch<PokemonTypesResponse>(`${apiBaseUrl}/type`, { key: 'pokemon-types', server: false })
 
-      this.types = data.results
+      this.types = data.value?.results ?? []
 
-      return data.results
+      return this.types
     },
     async getOrFetchPokemonsByType(name: string, url: string, apiBaseUrl: string) {
       if (this.pokemonType[name]) {
         return this.pokemonType[name]
       }
 
-      const data = await $fetch<PokemonsOnTypeResponse>(url)
+      const { data } = await useFetch<PokemonsOnTypeResponse>(url)
 
-      this.pokemonType[name] = data.pokemon.map(pokemon => transformDetailIntoOwn(pokemon.pokemon, apiBaseUrl))
+      if (!data.value) {
+        return []
+      }
+
+      this.pokemonType[name] = data.value.pokemon.map(pokemon => transformDetailIntoOwn(pokemon.pokemon, apiBaseUrl))
 
       return this.pokemonType[name]
     },
@@ -90,9 +96,13 @@ export const usePokemonStore = defineStore('pokemon', {
         return this.pokemons[name]
       }
 
-      const data = await $fetch<PokemonDetailResponse>(`${apiBaseUrl}/pokemon/${name}`)
+      const { data } = await useFetch<PokemonDetailResponse>(`${apiBaseUrl}/pokemon/${name}`, { key: `pokemon-${name}` })
 
-      const transformedPokemon = transformDetailIntoOwn(data, apiBaseUrl)
+      if (!data.value) {
+        return
+      }
+
+      const transformedPokemon = transformDetailIntoOwn(data.value, apiBaseUrl)
 
       this.pokemons[name] = transformedPokemon
 
