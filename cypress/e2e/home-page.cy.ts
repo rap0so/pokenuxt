@@ -18,6 +18,8 @@ describe('Home Page', () => {
   })
 
   it('searches for Pikachu and finds it', () => {
+    cy.get('li[role="listitem"]').should('have.length.at.least', 1)
+
     cy.get('input[placeholder="e.g. Pikachu"]').type('pikachu')
     cy.get('button[name="search"]').click()
 

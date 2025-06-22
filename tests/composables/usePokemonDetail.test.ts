@@ -1,11 +1,11 @@
 import { ref } from 'vue'
 import type { Mock } from 'vitest'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { usePokemonDetail } from '@/composables/usePokemonDetail'
-import { usePokemonStore } from '@/stores/pokemon'
+import { usePokemonDetail } from '~/composables/usePokemonDetail'
+import { usePokemonStore } from '~/stores/pokemon'
 import { useAsyncData } from '#app'
 
-vi.mock('@/stores/pokemon', () => ({
+vi.mock('~/stores/pokemon', () => ({
   usePokemonStore: vi.fn(),
 }))
 
