@@ -16,8 +16,9 @@
           placeholder="e.g. Pikachu"
           class="p-2 border rounded-l-xl focus:outline-none focus:ring-2 focus:ring-purple-400"
         >
-        <button
-          class="bg-purple-600 text-white font-bold px-6 py-2 rounded-r-xl shadow hover:bg-purple-800 focus:outline focus:ring-2 focus:ring-purple-400"
+
+        <BaseButton
+          variant="search"
           @click="handleSearch"
         >
           <svg
@@ -32,7 +33,7 @@
             stroke-width="2"
             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
           /></svg>
-        </button>
+        </BaseButton>
       </div>
     </div>
   </form>
@@ -40,6 +41,7 @@
 
 <script setup lang="ts">
 import { defineEmits, ref } from 'vue'
+import BaseButton from './BaseButton.vue'
 
 const emit = defineEmits<{
   (e: 'update:nameSearch' | 'update:type', value: string): void

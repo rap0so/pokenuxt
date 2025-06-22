@@ -74,12 +74,11 @@
     >
       Pokémon not found.
     </div>
-    <button
-      class="mt-8 bg-purple-600 text-white font-bold px-6 py-2 rounded-xl shadow hover:bg-purple-800 focus:outline focus:ring-2 focus:ring-purple-400"
-      @click="goHome"
-    >
-      ← Back
-    </button>
+    <div class="mt-3">
+      <BaseButton @click="goHome">
+        ← Back
+      </BaseButton>
+    </div>
   </main>
 </template>
 
@@ -87,6 +86,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { computed } from 'vue'
 import { usePokemonDetail } from '~/composables/usePokemonDetail'
+import BaseButton from '~/components/BaseButton.vue'
 import getTypeGradient from '~/styles/getTypeGradient'
 
 const route = useRoute()

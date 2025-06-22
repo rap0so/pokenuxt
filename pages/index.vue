@@ -1,6 +1,6 @@
 <template>
   <main class="p-4">
-    <h1 class="text-3xl font-extrabold mb-6 text-purple-700">
+    <h1 class="text-3xl font-extrabold mb-6 text-purple-400">
       PokéNuxt
     </h1>
 
@@ -44,20 +44,18 @@
       class="flex justify-center gap-4 mt-8"
       aria-label="Pagination"
     >
-      <button
-        class="bg-purple-500 text-white px-4 py-2 rounded-md disabled:opacity-50"
+      <BaseButton
         :disabled="pending || page === 1"
         @click="prevPage"
       >
         Previous
-      </button>
-      <button
-        class="bg-purple-500 text-white px-4 py-2 rounded-md disabled:opacity-50"
+      </BaseButton>
+      <BaseButton
         :disabled="pending"
         @click="nextPage"
       >
         Next
-      </button>
+      </BaseButton>
     </nav>
   </main>
 </template>
@@ -70,6 +68,7 @@ import { usePokemonsByType } from '~/composables/usePokemonsByType'
 import PokemonFilters from '~/components/PokemonFilters.vue'
 import PokemonCard from '~/components/PokemonCard.vue'
 import PokemonSearch from '~/components/PokemonSearch.vue'
+import BaseButton from '~/components/BaseButton.vue'
 import type { OwnPokemon } from '~/types/pokemon.types'
 import type { PokemonTypes } from '~/types/api/response.type'
 

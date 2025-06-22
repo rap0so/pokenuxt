@@ -38,12 +38,12 @@ const computedClass = computed(() => {
   const base = 'text-white font-bold px-6 py-2 shadow focus:outline focus:ring-2 focus:ring-purple-400 disabled:opacity-50 transition'
 
   const variants: Record<string, string> = {
-    default: 'bg-purple-600 hover:bg-purple-800',
+    default: 'bg-purple-600 hover:bg-purple-800 rounded-xl',
     solid: 'bg-purple-500 hover:bg-purple-700',
     ghost: 'bg-transparent text-purple-600 hover:bg-purple-100',
     search: 'bg-purple-600 px-4 py-2 rounded-r-xl hover:bg-purple-800',
   }
 
-  return `${base} ${variants[props.variant] || ''} rounded-${props.rounded} ${props.block ? 'w-full' : ''}`
+  return `${base} ${variants[props.variant] || ''} ${props.block ? 'w-full' : ''}`
 })
 </script>
