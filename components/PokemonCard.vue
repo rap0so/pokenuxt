@@ -10,7 +10,7 @@
         :src="spriteUrl"
         :alt="`${name} sprite`"
         class="w-full h-full"
-        placeholder="/loading.gif"
+        placeholder="/images/loading.gif"
         placeholder-class="rounded-full w-full h-full object-cover opacity-50"
       />
     </div>

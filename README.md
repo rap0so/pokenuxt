@@ -1,5 +1,5 @@
 # PokéNuxt
-<img src="public/logo.png" alt="logo" style="width:30%;">
+<img src="public/images/logo.png" alt="logo" style="width:30%;">
 
 
 This is the **PokéNuxt**—a Nuxt 3 web app styled with UnoCSS (Tailwind‑like) that fetches data from the public [PokeAPI](https://pokeapi.co).  

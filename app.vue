@@ -31,7 +31,7 @@ useHead({
     {
       rel: 'preload',
       as: 'image',
-      href: '/loading.gif',
+      href: '/images/loading.gif',
     },
   ],
 })

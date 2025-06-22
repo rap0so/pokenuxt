@@ -17,7 +17,7 @@
         :alt="`Official artwork of ${pokemon.name}`"
         class="w-50 h-48 object-contain drop-shadow-lg mb-2"
         loading="lazy"
-        placeholder="/loading.gif"
+        placeholder="/images/loading.gif"
         placeholder-class="w-50 h-48 opacity-50"
       />
       <h1
@@ -72,7 +72,7 @@
       v-else
       class="text-xl text-red-700 mt-24"
     >
-      Pokémon not found.
+      <BaseError :label="`Failed to find ${name}`" />
     </div>
     <div class="mt-3">
       <BaseButton @click="goHome">
