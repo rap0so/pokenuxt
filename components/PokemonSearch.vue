@@ -4,17 +4,16 @@
     @submit.prevent
   >
     <div class="flex flex-col">
-      <label
-        for="nameSearch"
-        class="text-sm font-medium mb-1"
-      >Search by name</label>
+      <BaseLabel for="nameSearch">
+        Search by name
+      </BaseLabel>
       <div class="flex">
         <input
           id="nameSearch"
           v-model="nameSearch"
           type="text"
           placeholder="e.g. Pikachu"
-          class="p-2 border rounded-l-xl focus:outline-none focus:ring-2 focus:ring-purple-400"
+          class="box-bg rounded-l-xl rounded-r-none"
         >
 
         <BaseButton

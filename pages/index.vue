@@ -1,8 +1,10 @@
 <template>
   <main class="p-4">
-    <h1 class="text-3xl font-extrabold mb-6 text-purple-400">
-      PokéNuxt
-    </h1>
+    <div class="flex items-center justify-between">
+      <h1 class="text-4xl font-extrabold mb-6 text-purple-400 dark:text-purple-500 ">
+        PokéNuxt
+      </h1>
+    </div>
 
     <div class="flex gap-3">
       <PokemonSearch
@@ -14,9 +16,15 @@
       />
     </div>
 
-    <div v-if="pending">
-      Loading page {{ page }}
-    </div>
+    <ul
+      v-if="pending"
+      class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+    >
+      <SkeletonCard
+        v-for="i in 8"
+        :key="i"
+      />
+    </ul>
     <div v-else-if="error">
       <BaseError :label="error" />
     </div>
@@ -60,6 +68,7 @@ import { useSearchPokemon } from '~/composables/useSearchPokemon'
 import { usePokemonsByType } from '~/composables/usePokemonsByType'
 import PokemonFilters from '~/components/PokemonFilters.vue'
 import PokemonCard from '~/components/PokemonCard.vue'
+import SkeletonCard from '~/components/SkeletonCard.vue'
 import PokemonSearch from '~/components/PokemonSearch.vue'
 import BaseButton from '~/components/BaseButton.vue'
 import type { OwnPokemon } from '~/types/pokemon.types'

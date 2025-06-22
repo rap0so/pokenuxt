@@ -3,6 +3,9 @@
     <NuxtRouteAnnouncer />
 
     <NuxtLayout>
+      <div class="absolute top-4 right-4">
+        <ToggleThemeButton />
+      </div>
       <NuxtPage />
     </NuxtLayout>
   </div>
@@ -10,6 +13,10 @@
 
 <script setup>
 import '@unocss/reset/tailwind.css' // Importing Tailwind CSS reset styles
+import { useThemeStore } from '~/stores/theme'
+
+const theme = useThemeStore()
+onMounted(() => theme.init())
 
 useHead({
   title: 'PokéNuxt',
@@ -20,7 +27,7 @@ useHead({
     },
   ],
   bodyAttrs: {
-    class: 'bg-stone-100', // Setting the background color for the body
+    class: 'page-bg h-screen', // Setting the background color for the body
   },
   link: [
     {

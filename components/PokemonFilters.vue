@@ -5,14 +5,13 @@
     @submit.prevent
   >
     <div class="flex flex-col">
-      <label
-        for="typeFilter"
-        class="text-sm font-medium mb-1"
-      >Filter by type</label>
+      <BaseLabel for="typeFilter">
+        Filter by type
+      </BaseLabel>
       <select
         id="typeFilter"
         v-model="selectedType"
-        class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
+        class="box-bg rounded-xl h-[42px]"
         @change="handleTypeChange"
       >
         <option :value="defaultValue">

@@ -1,5 +1,5 @@
 <template>
-  <main class="p-4 min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-purple-100 via-pink-100 to-yellow-50">
+  <main class="p-4 min-h-screen flex flex-col items-center justify-start page-bg">
     <div
       v-if="pending"
       class="text-xl text-gray-700 mt-24"
