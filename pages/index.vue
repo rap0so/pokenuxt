@@ -18,7 +18,7 @@
       Loading page {{ page }}
     </div>
     <div v-else-if="error">
-      Failed to load Pokémons
+      <BaseError :label="error" />
     </div>
     <ul
       v-else
@@ -33,7 +33,7 @@
     </ul>
 
     <nav
-      v-if="paginatedMode"
+      v-if="showPaginationControls"
       class="flex justify-center gap-4 mt-8"
       aria-label="Pagination"
     >
@@ -65,9 +65,8 @@ import BaseButton from '~/components/BaseButton.vue'
 import type { OwnPokemon } from '~/types/pokemon.types'
 import type { PokemonTypes } from '~/types/api/response.type'
 
-const paginatedMode = ref(false)
-const notFound = ref(false)
-const error = ref(false)
+const showPaginationControls = ref(true)
+const error = ref('')
 const nameSearch = ref('')
 const selectedType = ref<PokemonTypes>({
   name: '',
@@ -76,37 +75,39 @@ const selectedType = ref<PokemonTypes>({
 
 const { offset, pageSize, nextPage, prevPage, page } = usePagination(0, 20)
 
-const { data: rawResult, pending, error: responseError } = usePokemons(offset, pageSize)
-if (responseError.value) {
-  error.value = true
-}
+const { data: rawResult, pending } = usePokemons(offset, pageSize)
 
 const pokemonList = ref<OwnPokemon[]>([])
 
 watchEffect(async () => {
-  paginatedMode.value = false
+  const isFilterMode = selectedType.value.name
+  const isSearchMode = nameSearch.value
+  error.value = ''
+  showPaginationControls.value = true
 
-  if (selectedType.value.name) {
-    const pokemonsByType = usePokemonsByType(selectedType)
-    if (!pokemonsByType.data.value) {
-      // TODO: trigger toast
-      return
-    }
-    pokemonList.value = pokemonsByType.data.value
+  if (isFilterMode) {
+    const pokemonsByType = await usePokemonsByType(selectedType)
+    pokemonList.value = pokemonsByType
   }
   else {
-    paginatedMode.value = true
     pokemonList.value = rawResult.value || []
   }
 
-  if (nameSearch.value) {
-    paginatedMode.value = false
-    const foundPokemon = await useSearchPokemon(nameSearch.value)
-    if (!foundPokemon) {
-      notFound.value = true
-      return
-    }
+  if (isSearchMode) {
+    const specific = isFilterMode ? 'pokemonType' : undefined
+    const foundPokemon = await useSearchPokemon(nameSearch.value, specific)
     pokemonList.value = foundPokemon
+  }
+
+  if (error.value || pending.value || isFilterMode || isSearchMode) {
+    showPaginationControls.value = false
+  }
+})
+
+watch(pokemonList, () => {
+  const listIsEmpty = !pokemonList.value?.length
+  if (listIsEmpty && !selectedType.value.name) {
+    error.value = 'Something went wrong. Try again soon.'
   }
 })
 </script>

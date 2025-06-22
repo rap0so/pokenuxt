@@ -12,9 +12,24 @@ export const usePokemonStore = defineStore('pokemon', {
     types: [] as PokemonTypes[],
   }),
   actions: {
-    async getOrSearchPokemon(name: string, apiBaseUrl: string) {
+    async getOrSearchPokemon(
+      name: string,
+      apiBaseUrl: string,
+      specific?: keyof ReturnType<typeof usePokemonStore>['$state'],
+    ) {
       if (!name) {
         return []
+      }
+
+      if (specific) {
+        const foundOnSpecific = Object.values(
+          this[specific]
+          ?? {},
+        )
+          .flatMap(page => page)
+          .filter((pokemon: OwnPokemon) => pokemon.name.includes(name))
+
+        return foundOnSpecific.length ? foundOnSpecific : []
       }
 
       const foundOnPages = Object.values(this.pages)
@@ -23,6 +38,14 @@ export const usePokemonStore = defineStore('pokemon', {
 
       if (foundOnPages.length) {
         return foundOnPages
+      }
+
+      const foundOnTypes = Object.values(this.pokemonType)
+        .flatMap(page => page)
+        .filter(pokemon => pokemon.name.includes(name))
+
+      if (foundOnTypes.length) {
+        return foundOnTypes
       }
 
       const foundOnSingles = Object.values(this.pokemons)
