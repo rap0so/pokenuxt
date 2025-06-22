@@ -89,7 +89,7 @@ export const usePokemonStore = defineStore('pokemon', {
         return this.types
       }
 
-      const { data } = await useFetch<PokemonTypesResponse>(`${apiBaseUrl}/type`, { key: 'pokemon-types', server: false })
+      const { data } = await useFetch<PokemonTypesResponse>(`${apiBaseUrl}/type`, { key: 'pokemon-types' })
 
       this.types = data.value?.results ?? []
 
