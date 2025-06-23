@@ -3,26 +3,26 @@
     v-model="locale"
     class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
     aria-label="Select language"
+    title="Select language"
+    @change="handleLocaleChange"
   >
     <option
-      v-for="(name, code) in availableLocales"
-      :key="code"
-      :value="code"
+      v-for="localeObj in locales"
+      :key="localeObj.code"
+      :value="localeObj.code"
     >
-      {{ name }}
+      {{ localeObj.name }}
     </option>
   </select>
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
+import { useI18n, type Locale } from 'vue-i18n'
 
-const { locale } = useI18n()
+const { locales, setLocale, locale } = useI18n()
 
-// TODO: is there a better way to get these langs?
-const availableLocales: Record<string, string> = {
-  en: 'English',
-  pt: 'Português',
-  fr: 'Français',
+function handleLocaleChange(event: Event) {
+  const selectedLocale = (event.target as HTMLSelectElement).value as Locale
+  setLocale(selectedLocale)
 }
 </script>
