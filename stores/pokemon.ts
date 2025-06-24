@@ -15,18 +15,14 @@ export const usePokemonStore = defineStore('pokemon', {
     async getOrSearchPokemon(
       name: string,
       apiBaseUrl: string,
-      specific?: keyof ReturnType<typeof usePokemonStore>['$state'],
+      searchByType?: string,
     ) {
       if (!name) {
         return []
       }
 
-      if (specific) {
-        const foundOnSpecific = Object.values(
-          this[specific]
-          ?? {},
-        )
-          .flatMap(page => page)
+      if (searchByType) {
+        const foundOnSpecific = this.pokemonType[searchByType]
           .filter((pokemon: OwnPokemon) => pokemon.name.includes(name))
 
         return foundOnSpecific.length ? foundOnSpecific : []

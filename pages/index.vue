@@ -106,8 +106,7 @@ watchEffect(async () => {
   }
 
   if (isSearchMode) {
-    const specific = isFilterMode ? 'pokemonType' : undefined
-    const foundPokemon = await useSearchPokemon(nameSearch.value, specific)
+    const foundPokemon = await useSearchPokemon(nameSearch.value, isFilterMode)
     pokemonList.value = foundPokemon
   }
 

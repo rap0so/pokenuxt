@@ -1,7 +1,5 @@
-import type { StoreKeys } from '~/types/store.types'
-
-export const useSearchPokemon = (name: string, specificPage?: StoreKeys) => {
+export const useSearchPokemon = (name: string, searchByType?: string) => {
   const { store, apiBaseUrl } = usePokemonApiContext()
 
-  return store.getOrSearchPokemon(name, apiBaseUrl, specificPage)
+  return store.getOrSearchPokemon(name, apiBaseUrl, searchByType)
 }
