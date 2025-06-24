@@ -47,7 +47,7 @@ Build with **Typescript**
 * Dark/light mode toggle 👍🏾
 * E2E tests (Playwright / Cypress) 👍🏾
 * CI pipeline (lint + test + deploy on push)
-* Internationalization (English + one more language)
+* Internationalization (English + one more language) 👍🏾
 * Stats radar chart
 
 ---

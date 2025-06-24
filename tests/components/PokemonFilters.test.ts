@@ -32,7 +32,7 @@ describe('PokemonFilters', () => {
     const optionTexts = wrapper.findAll('option').map(o => o.text())
 
     expect(optionTexts).toEqual(expect.arrayContaining([
-      'All Types',
+      'filter.all',
       'grass',
       'fire',
     ]))
