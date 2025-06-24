@@ -30,6 +30,6 @@ describe('Pokemon Detail Page', () => {
 
   it('should show error for invalid pokemon', () => {
     cy.visit('/pokemon/invalidmon')
-    cy.contains('Failed to find invalidmon').should('exist')
+    cy.contains('Pokémon not found.').should('exist')
   })
 })

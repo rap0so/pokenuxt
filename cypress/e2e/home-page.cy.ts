@@ -27,7 +27,7 @@ describe('Home Page', () => {
   })
 
   it('filters by a type (e.g., "electric")', () => {
-    cy.get('select').select('electric', { force: true })
+    cy.get('select#typeFilter').select('electric', { force: true })
     cy.get('li[role="listitem"]').should('have.length.greaterThan', 0)
   })
 
