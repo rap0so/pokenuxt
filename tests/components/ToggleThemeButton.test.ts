@@ -17,7 +17,7 @@ describe('ToggleThemeButton', () => {
     const { default: ToggleThemeButton } = await import('~/components/ToggleThemeButton.vue')
     const wrapper = mount(ToggleThemeButton)
 
-    expect(wrapper.text()).toContain('☀️ Light')
+    expect(wrapper.text()).toContain('☀️ theme.light')
   })
 
   it('calls theme.toggle() on click', async () => {
