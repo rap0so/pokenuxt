@@ -1,10 +1,10 @@
 <template>
   <form
     v-if="types"
-    class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6"
+    class="flex flex-col sm:flex-row items-start sm:items-center gap-4"
     @submit.prevent
   >
-    <div class="flex flex-col">
+    <div class="wrapper-controls">
       <BaseLabel for="typeFilter">
         {{ $t('filter.label') }}
       </BaseLabel>

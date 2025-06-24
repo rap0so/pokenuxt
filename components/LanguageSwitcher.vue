@@ -1,9 +1,11 @@
 <template>
   <select
+    id="locale"
     v-model="locale"
-    class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
+    class="box-bg rounded"
     aria-label="Select language"
     title="Select language"
+    name="locale"
     @change="handleLocaleChange"
   >
     <option

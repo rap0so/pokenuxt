@@ -9,7 +9,7 @@
 
     <div
       v-else-if="pokemon"
-      class="w-full max-w-3xl bg-white/80 rounded-2xl shadow-lg p-6 mt-4 flex flex-col items-center"
+      class="w-full max-w-3xl bg-white/80 rounded-2xl shadow-lg p-6 mt-6 flex flex-col items-center"
       aria-labelledby="pokemon-title"
     >
       <NuxtImg

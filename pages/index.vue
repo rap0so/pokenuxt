@@ -1,12 +1,12 @@
 <template>
   <main class="p-4">
     <div class="flex items-center justify-between">
-      <h1 class="text-4xl font-extrabold mb-6 text-purple-400 dark:text-purple-500 ">
+      <h1 class="text-4xl font-extrabold mb-6 text-purple-400 dark:text-purple-500">
         PokéNuxt
       </h1>
     </div>
 
-    <div class="flex gap-3">
+    <div class="flex flex-col sm:flex-row gap-3 mb-8">
       <PokemonSearch
         v-model:name-search="nameSearch"
       />

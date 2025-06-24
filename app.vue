@@ -3,7 +3,7 @@
     <NuxtRouteAnnouncer />
 
     <NuxtLayout>
-      <div class="absolute top-4 right-4">
+      <div class="md:absolute md:top-4 md:right-4 flex justify-end p-4">
         <div class="flex gap-3">
           <ToggleThemeButton />
           <LanguageSwitcher />

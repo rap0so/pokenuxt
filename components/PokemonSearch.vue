@@ -1,19 +1,19 @@
 <template>
   <form
-    class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6"
+    class="flex flex-col sm:flex-row items-start sm:items-center gap-4"
     @submit.prevent
   >
-    <div class="flex flex-col">
+    <div class="wrapper-controls">
       <BaseLabel for="nameSearch">
         {{ $t('search.label') }}
       </BaseLabel>
-      <div class="flex">
+      <div class="flex w-full sm:w-auto">
         <input
           id="nameSearch"
           v-model="nameSearch"
           type="text"
           :placeholder="$t('search.placeholder')"
-          class="box-bg rounded-l-xl rounded-r-none"
+          class="box-bg rounded-l-xl rounded-r-none w-full"
         >
 
         <BaseButton
